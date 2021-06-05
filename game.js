@@ -90,8 +90,9 @@ const textNodes = [
       },
       {
         text: 'Go upstairs',
-        requiredState: (currentState) => currentState.visitedLeft,
-        nextText: 24
+        requiredState: (currentState) => currentState.visitedLeft && currentState.visitedRight,
+        setState: { visitedLeft: false, visitedRight: false },
+        nextText: 22
       }
     ]
   },
@@ -105,7 +106,7 @@ const textNodes = [
       },
       {
         text: 'Keep going',
-        nextText: 8
+        nextText: 9
       }
     ]
   },
@@ -158,7 +159,7 @@ const textNodes = [
     text: 'Red: Oh! Thank you so much! The thing I lost is a...um...plushy, actually. You know, this is going to sound funny but I think it looks a bit like you. Anyway, I really appreciate your help. Please help me find it, it\'s my treasure!',
     options: [
       {
-        text: 'Keep going',
+        text: 'You promise to keep an eye out for it',
         setState: { plushQuest: true },
         nextText: 9
       }
@@ -180,10 +181,10 @@ const textNodes = [
   },
   {
     id: 10,
-    text: 'Yellow: Heyooo you must be new here lol, anywayyy Imma prolly swing by the game area later. You got some strong eyebrows there buddy, you deffo look like the competitive type hehe...say, if you wanna join us, just use this keycard at the yellow door. Laterzzz',
+    text: 'Yellow: Heyooo you must be new here lol, anywayyy Imma prolly swing by the game area later. Woah, you got some strong eyebrows there buddy, take it easy hehe...say, if you wanna join us, just use this keycard at the yellow door. Laterzzz',
     options: [
       {
-        text: 'Keep going',
+        text: 'Pocket the keycard and keep going',
         setState: { yellowCard: true },
         nextText: 11
       }
@@ -195,6 +196,7 @@ const textNodes = [
     options: [
       {
         text: 'Open the red door',
+        setState: { catPic: true },
         nextText: 14
       },
       {
@@ -224,7 +226,7 @@ const textNodes = [
     text: 'Looks like a...bar? (Really, in the middle of this random house?) You spot the blue bartender bean.',
     options: [
       {
-        text: 'Ask them about this place',
+        text: 'They look friendly. Take a seat at the counter',
         nextText: 17
       },
       {
@@ -240,11 +242,18 @@ const textNodes = [
     options: [
       {
         text: 'Look behind the cat painting',
-        nextText: 24
+        requiredState: (currentState) => currentState.catPic,
+        nextText: 18
+      },
+      {
+        text: 'Donate $5?',
+        setState: { artDonation: true, visitedRight: true },
+        nextText: 3
       },
       {
         text: 'Go back',
-        nextText: 24
+        setState: { visitedRight: true },
+        nextText: 3
       }
     ]
   },
@@ -254,11 +263,12 @@ const textNodes = [
     options: [
       {
         text: 'Say \'Sup\'',
-        nextText: 24
+        nextText: 19
       },
       {
         text: 'Yeet the hell out of there',
-        nextText: 24
+        setState: { visitedRight: true },
+        nextText: 3
       }
     ]
   },
@@ -275,16 +285,195 @@ const textNodes = [
   },
   {
     id: 17,
-    text: 'Blue: Well, well, well, let\'s see some ID \'ere. eh? Oh what\'s that? You don\'t wanna drink? Now that\'s jus\' silly. Get o\'er \'ere! Let ol\' blue fix ya up, mister.',
+    text: 'Blue: Well, well, well, let\'s see some ID \'ere eh? Oh what\'s that? You don\' wanna drink? Now that\'s jus\' silly. Get o\'er \'ere! Let ol\' blue fix ya up, sonny.',
     options: [
       {
         text: 'Ask blue about the house',
+        nextText: 20
+      }
+    ]
+  },
+  {
+    id: 18,
+    text: 'A white keycard fell out!',
+    options: [
+      {
+        text: 'Pocket it',
+        setState: { whiteCard: true, catPic: false },
+        nextText: 14
+      }
+    ]
+  },
+  {
+    id: 19,
+    text: 'Green: Hey there pal, don\'t be shy! Come on in...closer...you got a lucky vibe aboutcha, ya know? I think you\'re just the guy to test out my new slot machine. Whaddya say? Take her for a spin, why don\'tcha!',
+    options: [
+      {
+        text: 'Gamble away',
+        nextText: 21
+      },
+      {
+        text: 'You like your money in your wallet, thanks. Pass',
+        setState: { visitedRight: true },
+        nextText: 3
+      }
+    ]
+  },
+  {
+    id: 20,
+    text: 'Blue: This place? Well, I\'ve been \'ere as long as I can remember. Folks tend to come \'n go but our missus, she as loyal as they come. Sure she\'d love to meet you, ol\' frien\'! If you can find her that is gahahaha!',
+    options: [
+      {
+        text: 'Tip Ol\' Blue and thank him for his time',
+        setState: { tippedBlue: true, visitedLeft: true },
+        nextText: 3
+      },
+      {
+        text: 'Down your glass and slip out the door',
+        setState: { visitedLeft: true },
+        nextText: 3
+      }
+    ]
+  },
+  {
+    id: 21,
+    text: 'You play to your heart\'s content. Ready to leave?',
+    options: [
+      {
+        text: 'Grab your earnings and head on out',
+        setState: { gambled: true, visitedRight: true },
+        nextText: 3
+      },
+      {
+        text: 'Just one more time!',
+        nextText: 21
+      }
+    ]
+  },
+  {
+    id: 22,
+    text: 'You have reached the Second Floor.',
+    options: [
+      {
+        text: 'Go left',
+        nextText: 23
+      },
+      {
+        text: 'Go right',
         nextText: 24
+      },
+      {
+        text: 'Go upstairs',
+        requiredState: (currentState) => currentState.visitedLeft && currentState.visitedRight,
+        nextText: 30
+      }
+    ]
+  },
+  {
+    id: 23,
+    text: 'You\'re in the game area!',
+    options: [
+      {
+        text: 'Open the Orange door',
+        nextText: 25
+      },
+      {
+        text: 'Open the Yellow door',
+        nextText: 26
       }
     ]
   },
   {
     id: 24,
+    text: 'Seems like a theater room. Make yourself at home?',
+    options: [
+      {
+        text: 'Fun! Where\'s the popcorn?',
+        nextText: 27
+      },
+      {
+        text: 'Eh, you\'re not really into movies',
+        setState: { visitedRight: true },
+        nextText: 22
+      }
+    ]
+  },
+  {
+    id: 25,
+    text: 'A group of beans are playing Codies.',
+    options: [
+      {
+        text: 'Join them',
+        nextText: 28
+      },
+      {
+        text: 'Poach one',
+        setState: { visitedLeft: true },
+        nextText: 22
+      }
+    ]
+  },
+  {
+    id: 26,
+    text: 'The door is locked.',
+    options: [
+      {
+        text: 'Use the yellow keycard',
+        requiredState: (currentState) => currentState.yellowCard,
+        nextText: 29
+      },
+      {
+        text: 'Return',
+        setState: { visitedLeft: true },
+        nextText: 22
+      }
+    ]
+  },
+  {
+    id: 27,
+    text: 'You got a free drink! Thanks for watching!',
+    options: [
+      {
+        text: 'Bravo! Donate $5',
+        setState: { movieDonation: true, freeDrink: true, visitedRight: true  },
+        nextText: 22
+      },
+      {
+        text: 'This is why you don\'t watch sequels...',
+        setState: { freeDrink: true, visitedRight: true  },
+        nextText: 22
+      }
+    ]
+  },
+  {
+    id: 28,
+    text: 'Purple: Hi there! Would you like to play with us? We\'d love to have you! Come on in!',
+    options: [
+      {
+        text: 'Play Codies',
+        setState: { codies: true, visitedLeft: true },
+        nextText: 22
+      }
+    ]
+  },
+  {
+    id: 29,
+    text: 'Yellow: Yooo you made it! We\'ve been playing like I dunno maybe 20 hours now lolol...join us!',
+    options: [
+      {
+        text: 'Play Valheim with Yellow and co',
+        setState: { valheim: true, visitedLeft: true },
+        nextText: 22
+      },
+      {
+        text: 'On second thought...you decide not to get sucked in',
+        setState: { visitedLeft: true },
+        nextText: 22
+      }
+    ]
+  },
+  {
+    id: 30,
     text: 'You reached the attic!',
     options: [
       {
