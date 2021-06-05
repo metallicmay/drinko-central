@@ -21,6 +21,7 @@ function showTextNode(textNodeIndex) {
       button.innerText = option.text
       button.classList.add('btn')
       button.addEventListener('click', () => selectOption(option))
+      button.addEventListener('click', () => changeBackground(option))
       optionButtonsElement.appendChild(button)
     }
   })
@@ -39,153 +40,255 @@ function selectOption(option) {
   showTextNode(nextTextNodeId)
 }
 
+function changeBackground(option) {
+  const image = document.getElementById('image')
+  const nextTextNodeId = option.nextText
+  if(nextTextNodeId == 12) {
+    image.setAttribute('src', 'music_room.png')
+  } else{
+    image.setAttribute('src', 'among-hd.jpg')
+  }
+}
+
 const textNodes = [
   {
     id: 1,
-    text: 'You wake up in a strange place and you see a jar of blue goo near you.',
+    text: 'You wake up in a basement.',
     options: [
       {
-        text: 'Take the goo',
-        setState: { blueGoo: true },
+        text: 'Go back to sleep',
+        setState: { sleep: true },
         nextText: 2
       },
       {
-        text: 'Leave the goo',
-        nextText: 2
+        text: 'Go upstairs',
+        nextText: 3
       }
     ]
   },
   {
     id: 2,
-    text: 'You venture forth in search of answers to where you are when you come across a merchant.',
+    text: 'You woke up refreshed.',
     options: [
       {
-        text: 'Trade the goo for a sword',
-        requiredState: (currentState) => currentState.blueGoo,
-        setState: { blueGoo: false, sword: true },
-        nextText: 3
-      },
-      {
-        text: 'Trade the goo for a shield',
-        requiredState: (currentState) => currentState.blueGoo,
-        setState: { blueGoo: false, shield: true },
-        nextText: 3
-      },
-      {
-        text: 'Ignore the merchant',
+        text: 'Go upstairs',
         nextText: 3
       }
     ]
   },
   {
     id: 3,
-    text: 'After leaving the merchant you start to feel tired and stumble upon a small town next to a dangerous looking castle.',
+    text: 'You have reached the First Floor.',
     options: [
       {
-        text: 'Explore the castle',
+        text: 'Go left',
         nextText: 4
       },
       {
-        text: 'Find a room to sleep at in the town',
+        text: 'Go right',
         nextText: 5
       },
       {
-        text: 'Find some hay in a stable to sleep in',
-        nextText: 6
+        text: 'Go upstairs',
+        requiredState: (currentState) => currentState.visitedLeft,
+        nextText: 24
       }
     ]
   },
   {
     id: 4,
-    text: 'You are so tired that you fall asleep while exploring the castle and are killed by some terrible monster in your sleep.',
+    text: 'You bump into a red bean with a worried expression. What will you do?',
     options: [
       {
-        text: 'Restart',
-        nextText: -1
+        text: 'Talk to them',
+        nextText: 6
+      },
+      {
+        text: 'Keep going',
+        nextText: 8
       }
     ]
   },
   {
     id: 5,
-    text: 'Without any money to buy a room you break into the nearest inn and fall asleep. After a few hours of sleep the owner of the inn finds you and has the town guard lock you in a cell.',
+    text: 'You trip over something. Looks like a wooden box. What will you do?',
     options: [
       {
-        text: 'Restart',
-        nextText: -1
-      }
-    ]
-  },
-  {
-    id: 6,
-    text: 'You wake up well rested and full of energy ready to explore the nearby castle.',
-    options: [
+        text: 'Pick it up',
+        setState: { box: true },
+        nextText: 7
+      },
       {
-        text: 'Explore the castle',
+        text: 'Keep going',
+        setState: { box: false },
         nextText: 7
       }
     ]
   },
   {
-    id: 7,
-    text: 'While exploring the castle you come across a horrible monster in your path.',
+    id: 6,
+    text: 'Red: Oh! I\'m so sorry, I didn\'t see you there! The truth is...I\'ve lost something important and this place is so big, I don\'t know if I\'ll ever find it on my own. Would you help me out?',
     options: [
       {
-        text: 'Try to run',
+        text: 'Agree to help red',
         nextText: 8
       },
       {
-        text: 'Attack it with your sword',
-        requiredState: (currentState) => currentState.sword,
+        text: 'Mama said not to talk to strangers. Keep moving',
         nextText: 9
-      },
+      }
+    ]
+  },
+  {
+    id: 7,
+    text: 'A yellow bean peeks out at you from behind a wall. What will you do?',
+    options: [
       {
-        text: 'Hide behind your shield',
-        requiredState: (currentState) => currentState.shield,
+        text: 'Make conversation',
         nextText: 10
       },
       {
-        text: 'Throw the blue goo at it',
-        requiredState: (currentState) => currentState.blueGoo,
+        text: 'Move on ahead without making eye contact',
         nextText: 11
       }
     ]
   },
   {
     id: 8,
-    text: 'Your attempts to run are in vain and the monster easily catches.',
+    text: 'Red: Oh! Thank you so much! The thing I lost is a...um...plushy, actually. You know, this is going to sound funny but I think it looks a bit like you. Anyway, I really appreciate your help. Please help me find it, it\'s my treasure!',
     options: [
       {
-        text: 'Restart',
-        nextText: -1
+        text: 'Keep going',
+        setState: { plushQuest: true },
+        nextText: 9
       }
     ]
   },
   {
     id: 9,
-    text: 'You foolishly thought this monster could be slain with a single sword.',
+    text: 'You reach the end of the corridor. There are two doors in front of you.',
     options: [
       {
-        text: 'Restart',
-        nextText: -1
+        text: 'Open the pink door',
+        nextText: 12
+      },
+      {
+        text: 'Open the blue door',
+        nextText: 13
       }
     ]
   },
   {
     id: 10,
-    text: 'The monster laughed as you hid behind your shield and ate you.',
+    text: 'Yellow: Heyooo you must be new here lol, anywayyy Imma prolly swing by the game area later. You got some strong eyebrows there buddy, you deffo look like the competitive type hehe...say, if you wanna join us, just use this keycard at the yellow door. Laterzzz',
     options: [
       {
-        text: 'Restart',
-        nextText: -1
+        text: 'Keep going',
+        setState: { yellowCard: true },
+        nextText: 11
       }
     ]
   },
   {
     id: 11,
-    text: 'You threw your jar of goo at the monster and it exploded. After the dust settled you saw the monster was destroyed. Seeing your victory you decide to claim this castle as your and live out the rest of your days there.',
+    text: 'You reach the end of the corridor. There are two doors in front of you.',
     options: [
       {
-        text: 'Congratulations. Play Again.',
+        text: 'Open the red door',
+        nextText: 14
+      },
+      {
+        text: 'Open the black door',
+        nextText: 15
+      }
+    ]
+  },
+  {
+    id: 12,
+    text: 'A cozy room greets you. The ambience is comforting.',
+    options: [
+      {
+        text: 'Pick up the plushy',
+        requiredState: (currentState) => currentState.plushQuest,
+        setState: { plushQuest: false, plushRetrieved: true },
+        nextText: 12
+      },
+      {
+        text: 'Listen to some music',
+        nextText: 16
+      }
+    ]
+  },
+  {
+    id: 13,
+    text: 'Looks like a...bar? (Really, in the middle of this random house?) You spot the blue bartender bean.',
+    options: [
+      {
+        text: 'Ask them about this place',
+        nextText: 17
+      },
+      {
+        text: 'Drinking isn\'t really your thing...you should probably go',
+        setState: { visitedLeft: true },
+        nextText: 3
+      }
+    ]
+  },
+  {
+    id: 14,
+    text: 'An art gallery!',
+    options: [
+      {
+        text: 'Look behind the cat painting',
+        nextText: 24
+      },
+      {
+        text: 'Go back',
+        nextText: 24
+      }
+    ]
+  },
+  {
+    id: 15,
+    text: 'A seedy looking bean leers at you as soon as you enter.',
+    options: [
+      {
+        text: 'Say \'Sup\'',
+        nextText: 24
+      },
+      {
+        text: 'Yeet the hell out of there',
+        nextText: 24
+      }
+    ]
+  },
+  {
+    id: 16,
+    text: 'A soothing melody plays in the background. You sink into the armchair, entranced.',
+    options: [
+      {
+        text: 'Return',
+        setState: { visitedLeft: true },
+        nextText: 3
+      }
+    ]
+  },
+  {
+    id: 17,
+    text: 'Blue: Well, well, well, let\'s see some ID \'ere. eh? Oh what\'s that? You don\'t wanna drink? Now that\'s jus\' silly. Get o\'er \'ere! Let ol\' blue fix ya up, mister.',
+    options: [
+      {
+        text: 'Ask blue about the house',
+        nextText: 24
+      }
+    ]
+  },
+  {
+    id: 24,
+    text: 'You reached the attic!',
+    options: [
+      {
+        text: 'Restart',
         nextText: -1
       }
     ]

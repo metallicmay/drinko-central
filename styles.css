@@ -11,11 +11,17 @@ body {
     align-items: center;
     width: 100vw;
     height: 100vh;
-    background-color: #333;
+    background-color: #333; 
 }
 
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
 .container {
-    width: 800px;
+    width: 1200px;
     max-width: 80%;
     background-color: white;
     padding: 10px;
