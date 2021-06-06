@@ -2,6 +2,7 @@ const textElement = document.getElementById('text')
 const optionButtonsElement = document.getElementById('option-buttons')
 
 let state = {}
+var sleepCounter = 2
 
 function startGame() {
   state = {}
@@ -55,6 +56,7 @@ function changeBackground(option) {
   } else if(nextTextNodeId == 22) {
     video.style.display = 'none'
     image.style.display = 'block'
+    video.pause()
   } else if(nextTextNodeId == 27) {
     video.style.display = 'block'
     image.style.display = 'none'
@@ -71,7 +73,6 @@ const textNodes = [
     options: [
       {
         text: 'Go back to sleep',
-        setState: { sleep: true },
         nextText: 2
       },
       {
@@ -83,11 +84,11 @@ const textNodes = [
   },
   {
     id: 2,
-    text: 'You woke up refreshed.',
+    text: 'You woke up refreshed. You noticed $20 on the floor nearby. Score!',
     options: [
       {
         text: 'Go upstairs',
-        setState: { meetRed: true, meetYellow: true },
+        setState: { money:true, meetRed: true, meetYellow: true },
         nextText: 3
       }
     ]
@@ -98,12 +99,12 @@ const textNodes = [
     options: [
       {
         text: 'Go left',
-        requiredState: (currentState) => currentState.meetRed,
+        requiredState: (currentState) => currentState.meetRed || currentState.partyQuest,
         nextText: 4
       },
       {
         text: 'Go left',
-        requiredState: (currentState) => currentState.plushRetrieved,
+        requiredState: (currentState) => currentState.plushQuest,
         nextText: 9
       },
       {
@@ -118,7 +119,7 @@ const textNodes = [
       },
       {
         text: 'Go upstairs',
-        requiredState: (currentState) => currentState.visitedLeft && currentState.visitedRight,
+        requiredState: (currentState) => currentState.visitedLeft && currentState.visitedRight || currentState.partyQuest,
         setState: { visitedLeft: false, visitedRight: false },
         nextText: 22
       }
@@ -130,7 +131,13 @@ const textNodes = [
     options: [
       {
         text: 'Talk to them',
+        requiredState: (currentState) => currentState.meetRed,
         nextText: 6
+      },
+      {
+        text: 'Ask Red to join the party',
+        requiredState: (currentState) => currentState.partyQuest,
+        nextText: 50
       },
       {
         text: 'Keep going',
@@ -160,6 +167,7 @@ const textNodes = [
     options: [
       {
         text: 'Agree to help red',
+        setState: { meetRed: false },
         nextText: 8
       },
       {
@@ -174,10 +182,12 @@ const textNodes = [
     options: [
       {
         text: 'Make conversation',
+        setState: { goingRight: true },
         nextText: 10
       },
       {
         text: 'Move on ahead without making eye contact',
+        setState: { goingRight: true },
         nextText: 11
       }
     ]
@@ -224,6 +234,13 @@ const textNodes = [
     options: [
       {
         text: 'Open the red door',
+        requiredState: (currentState) => currentState.whiteCard,
+        setState: { catPic: false },
+        nextText: 14
+      },
+      {
+        text: 'Open the red door',
+        requiredState: (currentState) => currentState.goingRight,
         setState: { catPic: true },
         nextText: 14
       },
@@ -332,7 +349,7 @@ const textNodes = [
     options: [
       {
         text: 'Pocket it',
-        setState: { whiteCard: true, catPic: false },
+        setState: { whiteCard: true, catPic: false, goingRight: false },
         nextText: 14
       }
     ]
@@ -349,6 +366,11 @@ const textNodes = [
         text: 'You like your money in your wallet, thanks. Pass',
         setState: { visitedRight: true },
         nextText: 3
+      },
+      {
+        text: 'Ask Green to join the party',
+        requiredState: (currentState) => currentState.partyQuest,
+        nextText: 50
       }
     ]
   },
@@ -365,6 +387,11 @@ const textNodes = [
         text: 'Down your glass and slip out the door',
         setState: { visitedLeft: true },
         nextText: 3
+      },
+      {
+        text: 'Ask Blue to join the party',
+        requiredState: (currentState) => currentState.partyQuest,
+        nextText: 50
       }
     ]
   },
@@ -397,8 +424,14 @@ const textNodes = [
       },
       {
         text: 'Go upstairs',
-        requiredState: (currentState) => currentState.visitedLeft && currentState.visitedRight,
+        requiredState: (currentState) => currentState.visitedLeft && currentState.visitedRight || currentState.partyQuest,
+        setState: { visitedLeft: false, visitedRight: false },
         nextText: 30
+      },
+      {
+        text: 'Go downstairs',
+        requiredState: (currentState) => currentState.partyQuest,
+        nextText: 3
       }
     ]
   },
@@ -486,6 +519,11 @@ const textNodes = [
         text: 'Play Codies',
         setState: { codies: true, visitedLeft: true },
         nextText: 22
+      },
+      {
+        text: 'Ask Purple and friends to join the party',
+        requiredState: (currentState) => currentState.partyQuest,
+        nextText: 50
       }
     ]
   },
@@ -502,11 +540,93 @@ const textNodes = [
         text: 'On second thought...you decide not to get sucked in',
         setState: { visitedLeft: true },
         nextText: 22
+      },
+      {
+        text: 'Ask Yellow and friends to join the party',
+        requiredState: (currentState) => currentState.partyQuest,
+        nextText: 50
       }
     ]
   },
   {
     id: 30,
+    text: 'Looks like you\'ve reached the attic. You hear a sniffling noise.',
+    options: [
+      {
+        text: 'Investigate',
+        nextText: 31
+      },
+      {
+        text: 'Leave',
+        nextText: 32
+      }
+    ]
+  },
+  {
+    id: 31,
+    text: 'White: Oh...I didn\'t see you there. I hope you\'ve been...sniff...enjoying yourself. Forgive me, I\'m not great with names, but please make yourself at home.',
+    options: [
+      {
+        text: 'Ask them what\'s wrong',
+        nextText: 33
+      },
+      {
+        text: 'Nod and leave them to their devices',
+        nextText: 32
+      }
+    ]
+  },
+  {
+    id: 32,
+    text: 'You are leaving for good. Are you sure?',
+    options: [
+      {
+        text: 'Yes, this isn\'t your problem',
+        nextText: 34
+      },
+      {
+        text: 'No, go back to White',
+        nextText: 33
+      }
+    ]
+  },
+  {
+    id: 33,
+    text: 'White: It\'s nothing, really...just, well, I really wanted us to wear matching hats today for my...birthday. But I don\'t want to bother anyone, they\'re all busy having fun, which is what I wanted, of course. It\'s probably a silly idea anyway.',
+    options: [
+      {
+        text: 'Help out White',
+        setState: { partyQuest: true },
+        nextText: 35
+      },
+      {
+        text: 'Are you really cold enough to leave her? Really? Well, it\'s your choice',
+        nextText: 32
+      }
+    ]
+  },
+  {
+    id: 34,
+    text: 'Goodbye!',
+    options: [
+      {
+        text: 'Try Again?',
+        nextText: -1
+      }
+    ]
+  },
+  {
+    id: 35,
+    text: 'Are you ready to go back?',
+    options: [
+      {
+        text: 'Go downstairs',
+        nextText: 22
+      }
+    ]
+  }, 
+  {
+    id: 50,
     text: 'You reached the attic!',
     options: [
       {
