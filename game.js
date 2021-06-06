@@ -43,9 +43,23 @@ function selectOption(option) {
 function changeBackground(option) {
   const image = document.getElementById('image')
   const nextTextNodeId = option.nextText
+  const audio = document.getElementById('audio')
+  const video = document.getElementById('video')
   if(nextTextNodeId == 12) {
     image.setAttribute('src', 'music_room.png')
-  } else{
+  } else if(nextTextNodeId == 16) {
+    audio.play()
+  } else if(nextTextNodeId == 3) {
+    audio.pause()
+    audio.currentTime = 0
+  } else if(nextTextNodeId == 22) {
+    video.style.display = 'none'
+    image.style.display = 'block'
+  } else if(nextTextNodeId == 27) {
+    video.style.display = 'block'
+    image.style.display = 'none'
+  }
+    else{
     image.setAttribute('src', 'among-hd.jpg')
   }
 }
@@ -62,6 +76,7 @@ const textNodes = [
       },
       {
         text: 'Go upstairs',
+        setState: { meetRed: true, meetYellow: true },
         nextText: 3
       }
     ]
@@ -72,6 +87,7 @@ const textNodes = [
     options: [
       {
         text: 'Go upstairs',
+        setState: { meetRed: true, meetYellow: true },
         nextText: 3
       }
     ]
@@ -82,11 +98,23 @@ const textNodes = [
     options: [
       {
         text: 'Go left',
+        requiredState: (currentState) => currentState.meetRed,
         nextText: 4
       },
       {
+        text: 'Go left',
+        requiredState: (currentState) => currentState.plushRetrieved,
+        nextText: 9
+      },
+      {
         text: 'Go right',
+        requiredState: (currentState) => currentState.meetYellow,
         nextText: 5
+      },
+      {
+        text: 'Go right',
+        requiredState: (currentState) => currentState.yellowCard,
+        nextText: 11
       },
       {
         text: 'Go upstairs',
@@ -185,7 +213,7 @@ const textNodes = [
     options: [
       {
         text: 'Pocket the keycard and keep going',
-        setState: { yellowCard: true },
+        setState: { yellowCard: true, meetYellow: false },
         nextText: 11
       }
     ]
@@ -212,12 +240,17 @@ const textNodes = [
       {
         text: 'Pick up the plushy',
         requiredState: (currentState) => currentState.plushQuest,
-        setState: { plushQuest: false, plushRetrieved: true },
+        setState: { plushQuest: false, plushRetrieved: true, meetRed: false },
         nextText: 12
       },
       {
         text: 'Listen to some music',
         nextText: 16
+      },
+      {
+        text: 'Return',
+        setState: { visitedLeft: true },
+        nextText: 3
       }
     ]
   },
