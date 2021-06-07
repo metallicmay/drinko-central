@@ -105,12 +105,12 @@ const textNodes = [
     options: [
       {
         text: 'Go left',
-        requiredState: (currentState) => currentState.meetRed || currentState.partyQuest,
+        requiredState: (currentState) => currentState.meetRed || currentState.partyQuest || currentState.plushQuest,
         nextText: 4
       },
       {
         text: 'Go left',
-        requiredState: (currentState) => currentState.plushRetrieved && currentState.meetWhite,
+        requiredState: (currentState) => currentState.plushRetrieved && currentState.meetWhite || currentState.invitedRed,
         nextText: 9
       },
       {
@@ -511,12 +511,12 @@ const textNodes = [
     options: [
       {
         text: 'Bravo! Donate $5',
-        setState: { movieDonation: true, freeDrink: true, visitedRight: true  },
+        setState: { movieDonation: true, visitedRight: true  },
         nextText: 22
       },
       {
         text: 'This is why you don\'t watch sequels...',
-        setState: { freeDrink: true, visitedRight: true  },
+        setState: { visitedRight: true  },
         nextText: 22
       }
     ]
