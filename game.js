@@ -46,13 +46,20 @@ function changeBackground(option) {
   const nextTextNodeId = option.nextText
   const audio = document.getElementById('audio')
   const video = document.getElementById('video')
-  if(nextTextNodeId == 12) {
+  if(nextTextNodeId == 2) {
+    image.setAttribute('src', 'stock_basement.jpg')
+  } else if(nextTextNodeId == 3) {
+    image.setAttribute('src', 'foyer.png')
+    audio.pause()
+    audio.currentTime = 0
+  } else if(nextTextNodeId == 12) {
     image.setAttribute('src', 'music_room.png')
   } else if(nextTextNodeId == 16) {
     audio.play()
-  } else if(nextTextNodeId == 3) {
-    audio.pause()
-    audio.currentTime = 0
+  } else if(nextTextNodeId == 18) {
+    image.setAttribute('src', 'music_room_no_plush.png')
+  } else if(nextTextNodeId == 21 && option.text == 'Just one more time!') {
+    alert("You might have a problem...")
   } else if(nextTextNodeId == 22) {
     video.style.display = 'none'
     image.style.display = 'block'
@@ -60,9 +67,8 @@ function changeBackground(option) {
   } else if(nextTextNodeId == 27) {
     video.style.display = 'block'
     image.style.display = 'none'
-  }
-    else{
-    image.setAttribute('src', 'among-hd.jpg')
+  } else{
+    image.setAttribute('src', 'foyer.png')
   }
 }
 
@@ -77,7 +83,7 @@ const textNodes = [
       },
       {
         text: 'Go upstairs',
-        setState: { meetRed: true, meetYellow: true },
+        setState: { meetRed: true, meetYellow: true, meetWhite: true },
         nextText: 3
       }
     ]
@@ -88,7 +94,7 @@ const textNodes = [
     options: [
       {
         text: 'Go upstairs',
-        setState: { money:true, meetRed: true, meetYellow: true },
+        setState: { money:true, meetRed: true, meetYellow: true, meetWhite: true },
         nextText: 3
       }
     ]
@@ -104,7 +110,7 @@ const textNodes = [
       },
       {
         text: 'Go left',
-        requiredState: (currentState) => currentState.plushQuest,
+        requiredState: (currentState) => currentState.plushRetrieved && currentState.meetWhite,
         nextText: 9
       },
       {
@@ -136,8 +142,8 @@ const textNodes = [
       },
       {
         text: 'Ask Red to join the party',
-        requiredState: (currentState) => currentState.partyQuest,
-        nextText: 50
+        requiredState: (currentState) => currentState.partyQuest && currentState.noRed,
+        nextText: 36
       },
       {
         text: 'Keep going',
@@ -156,7 +162,6 @@ const textNodes = [
       },
       {
         text: 'Keep going',
-        setState: { box: false },
         nextText: 7
       }
     ]
@@ -182,12 +187,10 @@ const textNodes = [
     options: [
       {
         text: 'Make conversation',
-        setState: { goingRight: true },
         nextText: 10
       },
       {
         text: 'Move on ahead without making eye contact',
-        setState: { goingRight: true },
         nextText: 11
       }
     ]
@@ -209,7 +212,13 @@ const textNodes = [
     options: [
       {
         text: 'Open the pink door',
+        requiredState: (currentState) => currentState.meetRed || currentState.plushQuest,
         nextText: 12
+      },
+      {
+        text: 'Open the pink door',
+        requiredState: (currentState) => currentState.plushRetrieved || currentState.partyQuest,
+        nextText: 18
       },
       {
         text: 'Open the blue door',
@@ -234,14 +243,6 @@ const textNodes = [
     options: [
       {
         text: 'Open the red door',
-        requiredState: (currentState) => currentState.whiteCard,
-        setState: { catPic: false },
-        nextText: 14
-      },
-      {
-        text: 'Open the red door',
-        requiredState: (currentState) => currentState.goingRight,
-        setState: { catPic: true },
         nextText: 14
       },
       {
@@ -258,7 +259,7 @@ const textNodes = [
         text: 'Pick up the plushy',
         requiredState: (currentState) => currentState.plushQuest,
         setState: { plushQuest: false, plushRetrieved: true, meetRed: false },
-        nextText: 12
+        nextText: 18
       },
       {
         text: 'Listen to some music',
@@ -291,14 +292,10 @@ const textNodes = [
     text: 'An art gallery!',
     options: [
       {
-        text: 'Look behind the cat painting',
-        requiredState: (currentState) => currentState.catPic,
-        nextText: 18
-      },
-      {
         text: 'Donate $5?',
-        setState: { artDonation: true, visitedRight: true },
-        nextText: 3
+        requiredState: (currentState) => currentState.money,
+        setState: { money: false, artDonation: true, visitedRight: true },
+        nextText: 14
       },
       {
         text: 'Go back',
@@ -345,12 +342,16 @@ const textNodes = [
   },
   {
     id: 18,
-    text: 'A white keycard fell out!',
+    text: 'A cozy room greets you. The ambience is comforting.',
     options: [
       {
-        text: 'Pocket it',
-        setState: { whiteCard: true, catPic: false, goingRight: false },
-        nextText: 14
+        text: 'Listen to some music',
+        nextText: 16
+      },
+      {
+        text: 'Return',
+        setState: { visitedLeft: true },
+        nextText: 3
       }
     ]
   },
@@ -369,8 +370,8 @@ const textNodes = [
       },
       {
         text: 'Ask Green to join the party',
-        requiredState: (currentState) => currentState.partyQuest,
-        nextText: 50
+        requiredState: (currentState) => currentState.partyQuest && currentState.noGreen,
+        nextText: 37
       }
     ]
   },
@@ -390,8 +391,8 @@ const textNodes = [
       },
       {
         text: 'Ask Blue to join the party',
-        requiredState: (currentState) => currentState.partyQuest,
-        nextText: 50
+        requiredState: (currentState) => currentState.partyQuest && currentState.noBlue,
+        nextText: 38
       }
     ]
   },
@@ -401,7 +402,7 @@ const textNodes = [
     options: [
       {
         text: 'Grab your earnings and head on out',
-        setState: { gambled: true, visitedRight: true },
+        setState: { visitedRight: true },
         nextText: 3
       },
       {
@@ -424,9 +425,14 @@ const textNodes = [
       },
       {
         text: 'Go upstairs',
-        requiredState: (currentState) => currentState.visitedLeft && currentState.visitedRight || currentState.partyQuest,
+        requiredState: (currentState) => currentState.visitedLeft && currentState.visitedRight && currentState.meetWhite,
         setState: { visitedLeft: false, visitedRight: false },
         nextText: 30
+      },
+      {
+        text: 'Head back to the Attic',
+        requiredState: (currentState) => currentState.partyQuest,
+        nextText: 41
       },
       {
         text: 'Go downstairs',
@@ -446,6 +452,10 @@ const textNodes = [
       {
         text: 'Open the Yellow door',
         nextText: 26
+      },
+      {
+        text: 'Go back',
+        nextText: 22
       }
     ]
   },
@@ -522,8 +532,8 @@ const textNodes = [
       },
       {
         text: 'Ask Purple and friends to join the party',
-        requiredState: (currentState) => currentState.partyQuest,
-        nextText: 50
+        requiredState: (currentState) => currentState.partyQuest && currentState.noPurple,
+        nextText: 39
       }
     ]
   },
@@ -543,8 +553,8 @@ const textNodes = [
       },
       {
         text: 'Ask Yellow and friends to join the party',
-        requiredState: (currentState) => currentState.partyQuest,
-        nextText: 50
+        requiredState: (currentState) => currentState.partyQuest && currentState.noYellow,
+        nextText: 40
       }
     ]
   },
@@ -592,11 +602,11 @@ const textNodes = [
   },
   {
     id: 33,
-    text: 'White: It\'s nothing, really...just, well, I really wanted us to wear matching hats today for my...birthday. But I don\'t want to bother anyone, they\'re all busy having fun, which is what I wanted, of course. It\'s probably a silly idea anyway.',
+    text: 'White: It\'s nothing, really...just, well, I made a bunch of matching hats and I wanted to wear them with everyone today. But I don\'t want to bother anyone, they\'re all busy having fun, which is what I wanted, of course. It\'s probably a silly idea anyway.',
     options: [
       {
         text: 'Help out White',
-        setState: { partyQuest: true },
+        setState: { partyQuest: true, meetWhite: false, noRed: true, noGreen: true, noBlue: true, noPurple: true, noYellow: true },
         nextText: 35
       },
       {
@@ -624,13 +634,256 @@ const textNodes = [
         nextText: 22
       }
     ]
-  }, 
+  },
   {
-    id: 50,
-    text: 'You reached the attic!',
+    id: 36,
+    text: 'Red: R-Really? You\'d like me to come? Oh...well, okay.',
     options: [
       {
-        text: 'Restart',
+        text: 'Return',
+        setState: { invitedRed: true, noRed: false },
+        nextText: 9
+      }
+    ]
+  },
+  {
+    id: 37,
+    text: 'Green: A party, eh? Well that seems like a good place to stea- I mean, find some more...ahem...clients.',
+    options: [
+      {
+        text: 'Return',
+        setState: { invitedGreen: true, noGreen: false },
+        nextText: 3
+      }
+    ]
+  },  
+  {
+    id: 38,
+    text: 'Blue: Ya really wan\' this ol\' geezer around? I don\' wanna spoil you younguns\' fun...gahahaha well if ya insist then!',
+    options: [
+      {
+        text: 'Return',
+        setState: { invitedBlue: true, noBlue: false },
+        nextText: 3
+      }
+    ]
+  },  
+  {
+    id: 39,
+    text: 'Purple: Oh my! A party? That sounds so exciting! I would LOVE to! Aren\'t you a sweetheart?',
+    options: [
+      {
+        text: 'Return',
+        setState: { invitedPurple: true, noPurple: false },
+        nextText: 23
+      }
+    ]
+  },  
+  {
+    id: 40,
+    text: 'Yellow: Yea yea yea jus gimme like fiiiive more minutes, I swear I\'m done...I\'ll be there dude! Chill out lol',
+    options: [
+      {
+        text: 'Return',
+        setState: { invitedYellow: true, noYellow: false },
+        nextText: 23
+      }
+    ]
+  },  
+  {
+    id: 41,
+    text: 'You\'re back in the Attic!',
+    options: [
+      {
+        text: 'Go meet White',
+        nextText: 42
+      },
+      {
+        text: 'Go back downstairs',
+        nextText: 22
+      }
+    ]
+  },  
+  {
+    id: 42,
+    text: 'White: Oh...it\'s you again. Are you leaving?',
+    options: [
+      {
+        text: 'No! Look who else is here...',
+        requiredState: (currentState) => currentState.invitedBlue || currentState.invitedGreen || currentState.invitedPurple || currentState.invitedYellow || currentState.invitedRed,
+        nextText: 44
+      },
+      {
+        text: 'Yup, gotta bounce',
+        nextText: 43
+      },
+      {
+        text: 'Not yet!',
+        nextText: 41
+      }
+    ]
+  },  
+  {
+    id: 43,
+    text: 'White: Well...thanks for showing up. Maybe, we might meet again someday. Farewell.',
+    options: [
+      {
+        text: 'Sayonara!',
+        nextText: 34
+      }
+    ]
+  },  
+  {
+    id: 44,
+    text: 'White: Oh wow! You really brought them here! For me!',
+    options: [
+      {
+        text: 'Let\'s put on the hats',
+        nextText: 45
+      }
+    ]
+  },     
+  {
+    id: 45,
+    text: 'You wear the hats and hang out with everyone',
+    options: [
+      {
+        text: 'Talk to Red',
+        requiredState: (currentState) => currentState.invitedRed,
+        nextText: 46
+      },
+      {
+        text: 'Talk to Yellow',
+        requiredState: (currentState) => currentState.invitedYellow,
+        nextText: 48
+      },
+      {
+        text: 'Talk to Green',
+        requiredState: (currentState) => currentState.invitedGreen,
+        nextText: 49
+      },
+      {
+        text: 'Talk to Purple',
+        requiredState: (currentState) => currentState.invitedPurple,
+        nextText: 51
+      },
+      {
+        text: 'Talk to Blue',
+        requiredState: (currentState) => currentState.invitedBlue,
+        nextText: 52
+      },
+      {
+        text: 'Talk to White',
+        nextText: 53
+      }
+    ]
+  },
+  {
+    id: 46,
+    text: 'Red: I\'m not really one for big gatherings, to be honest...but this is kinda nice',
+    options: [
+      {
+        text: 'I have something of yours',
+        requiredState: (currentState) => currentState.plushRetrieved,
+        nextText: 47
+      },
+      {
+        text: 'We should hang out more!',
+        nextText: 45
+      }
+    ]
+  },
+  {
+    id: 47,
+    text: 'Red: You found my plushy! Thank you so much! I\'ve missed him!',
+    options: [
+      {
+        text: 'No problem!',
+        nextText: 45
+      }
+    ]
+  },
+  {
+    id: 48,
+    text: 'Yellow: Yooo you should totally come play with us more...have you heard of this one game called \'Among Them\' or something like that...I think you\'d be great at it hehe',
+    options: [
+      {
+        text: 'Are you sure that\'s what it\'s called...?',
+        nextText: 45
+      }
+    ]
+  },
+  {
+    id: 49,
+    text: 'Green: What? I have a life outside of that room, ya know!',
+    options: [
+      {
+        text: 'Fiddle with the box',
+        requiredState: (currentState) => currentState.box,
+        nextText: 50
+      },
+      {
+        text: 'Okaaaaay...',
+        nextText: 45
+      }
+    ]
+  },
+  {
+    id: 50,
+    text: 'Green: Hey! That looks like my box of stole- I mean, thanks for findin\' it champ! I owe ya one, ya know?',
+    options: [
+      {
+        text: 'Here you go',
+        nextText: 45
+      }
+    ]
+  },
+  {
+    id: 51,
+    text: 'Purple: It was so sweet of you to draw White out of her shell like that. She could use some more socializing, even though this is her house!',
+    options: [
+      {
+        text: 'Glad to have helped',
+        nextText: 45
+      }
+    ]
+  },
+  {
+    id: 52,
+    text: 'Blue: Well I\'ll be darned if I don\' feel jus\' 40 \'ears younger around y\'all! Gahahahaha!',
+    options: [
+      {
+        text: 'Maybe Blue has had enough to drink...',
+        nextText: 45
+      }
+    ]
+  },
+  {
+    id: 53,
+    text: 'White: Thank you, thank you so much! I\'m having so much fun! Although I feel like it would be even more fun to do this on someone\'s birthday sometime haha...',
+    options: [
+      {
+        text: 'Actually...it is mine',
+        nextText: 54
+      }
+    ]
+  },
+  {
+    id: 54,
+    text: 'White: Oh my God! That\'s wonderful! HAPPY BIRTHDAY TO YOU! We are so happy to have you here with us! Now, let\'s go celebrate! :D',
+    options: [
+      {
+        text: 'Celebrate :)',
+        nextText: 55
+      }
+    ]
+  },
+  {
+    id: 55,
+    text: 'Thank you for playing with us, PINK! We love you and hope you have an awesome birthday!!',
+    options: [
+      {
+        text: 'Start over?',
         nextText: -1
       }
     ]
