@@ -47,17 +47,17 @@ function changeBackground(option) {
   const audio = document.getElementById('audio')
   const video = document.getElementById('video')
   if(nextTextNodeId == 2) {
-    image.setAttribute('src', 'stock_basement.jpg')
+    image.setAttribute('src', 'assets/stock_basement.jpg')
   } else if(nextTextNodeId == 3) {
-    image.setAttribute('src', 'foyer.png')
+    image.setAttribute('src', 'assets/foyer.png')
     audio.pause()
     audio.currentTime = 0
   } else if(nextTextNodeId == 12) {
-    image.setAttribute('src', 'music_room.png')
+    image.setAttribute('src', 'assets/music_room.png')
   } else if(nextTextNodeId == 16) {
     audio.play()
   } else if(nextTextNodeId == 18) {
-    image.setAttribute('src', 'music_room_no_plush.png')
+    image.setAttribute('src', 'assets/music_room_no_plush.png')
   } else if(nextTextNodeId == 21 && option.text == 'Just one more time!') {
     alert("You might have a problem...")
   } else if(nextTextNodeId == 22) {
@@ -68,7 +68,7 @@ function changeBackground(option) {
     video.style.display = 'block'
     image.style.display = 'none'
   } else{
-    image.setAttribute('src', 'foyer.png')
+    image.setAttribute('src', 'assets/foyer.png')
   }
 }
 
@@ -105,13 +105,7 @@ const textNodes = [
     options: [
       {
         text: 'Go left',
-        requiredState: (currentState) => currentState.meetRed || currentState.partyQuest || currentState.plushQuest,
         nextText: 4
-      },
-      {
-        text: 'Go left',
-        requiredState: (currentState) => currentState.plushRetrieved && currentState.meetWhite || currentState.invitedRed,
-        nextText: 9
       },
       {
         text: 'Go right',
@@ -217,7 +211,7 @@ const textNodes = [
       },
       {
         text: 'Open the pink door',
-        requiredState: (currentState) => currentState.plushRetrieved || currentState.partyQuest,
+        requiredState: (currentState) => currentState.plushRetrieved,
         nextText: 18
       },
       {
@@ -337,6 +331,11 @@ const textNodes = [
       {
         text: 'Ask blue about the house',
         nextText: 20
+      },
+      {
+        text: 'Ask Blue to join the party',
+        requiredState: (currentState) => currentState.partyQuest && currentState.noBlue,
+        nextText: 38
       }
     ]
   },
@@ -388,11 +387,6 @@ const textNodes = [
         text: 'Down your glass and slip out the door',
         setState: { visitedLeft: true },
         nextText: 3
-      },
-      {
-        text: 'Ask Blue to join the party',
-        requiredState: (currentState) => currentState.partyQuest && currentState.noBlue,
-        nextText: 38
       }
     ]
   },
