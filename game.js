@@ -73,11 +73,13 @@ function changeBackground(option) {
     video.pause()
   } else if(nextTextNodeId == 24) {
     image.setAttribute('src', 'assets/stock_movie_theater.png')
-  } else if(nextTextNodeId == 25 || nextTextNodeId == 28 || nextTextNodeId == 29) {
+  } else if(nextTextNodeId == 25 || nextTextNodeId == 29) {
     image.setAttribute('src', 'assets/stock_gaming_room.jpg')
   } else if(nextTextNodeId == 27) {
     video.style.display = 'block'
     image.style.display = 'none'
+  } else if(nextTextNodeId == 28) {
+    image.setAttribute('src', 'assets/stock_codies.png')
   } else if(nextTextNodeId >= 30 && nextTextNodeId <=33 || nextTextNodeId == 35 || nextTextNodeId >= 41 && nextTextNodeId <= 55) {
     image.setAttribute('src', 'assets/stock_attic.jpg')
   } else if(nextTextNodeId == 34) {
