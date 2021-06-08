@@ -46,7 +46,7 @@ function changeBackground(option) {
   const nextTextNodeId = option.nextText
   const audio = document.getElementById('audio')
   const video = document.getElementById('video')
-  if(nextTextNodeId == 2) {
+  if(nextTextNodeId <= 0 || nextTextNodeId == 2) {
     image.setAttribute('src', 'assets/stock_basement.jpg')
   } else if(nextTextNodeId == 3) {
     image.setAttribute('src', 'assets/foyer.png')
@@ -54,6 +54,12 @@ function changeBackground(option) {
     audio.currentTime = 0
   } else if(nextTextNodeId == 12) {
     image.setAttribute('src', 'assets/music_room.png')
+  } else if(nextTextNodeId == 13 || nextTextNodeId == 17 || nextTextNodeId == 20) {
+    image.setAttribute('src', 'assets/stock_bar.jpg')
+  } else if(nextTextNodeId == 14) {
+    image.setAttribute('src', 'assets/sammich.png')
+  } else if(nextTextNodeId == 15 || nextTextNodeId == 19 || nextTextNodeId == 21) {
+    image.setAttribute('src', 'assets/stock_casino.jpg')
   } else if(nextTextNodeId == 16) {
     audio.play()
   } else if(nextTextNodeId == 18) {
@@ -61,14 +67,23 @@ function changeBackground(option) {
   } else if(nextTextNodeId == 21 && option.text == 'Just one more time!') {
     alert("You might have a problem...")
   } else if(nextTextNodeId == 22) {
+    image.setAttribute('src', 'assets/foyer.png')
     video.style.display = 'none'
     image.style.display = 'block'
     video.pause()
+  } else if(nextTextNodeId == 24) {
+    image.setAttribute('src', 'assets/stock_movie_theater.png')
+  } else if(nextTextNodeId == 25 || nextTextNodeId == 28 || nextTextNodeId == 29) {
+    image.setAttribute('src', 'assets/stock_gaming_room.jpg')
   } else if(nextTextNodeId == 27) {
     video.style.display = 'block'
     image.style.display = 'none'
+  } else if(nextTextNodeId >= 30 && nextTextNodeId <=33 || nextTextNodeId == 35 || nextTextNodeId >= 41 && nextTextNodeId <= 55) {
+    image.setAttribute('src', 'assets/stock_attic.jpg')
+  } else if(nextTextNodeId == 34) {
+    image.setAttribute('src', 'assets/stock_open_door.jpg')
   } else{
-    image.setAttribute('src', 'assets/foyer.png')
+    image.setAttribute('src', 'assets/stock_doors.jpg')
   }
 }
 
