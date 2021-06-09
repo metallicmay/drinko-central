@@ -305,7 +305,7 @@ const textNodes = [
       {
         text: 'Donate $5?',
         requiredState: (currentState) => currentState.money,
-        setState: { money: false, artDonation: true, visitedRight: true },
+        setState: { money: false, visitedRight: true },
         nextText: 14
       },
       {
@@ -397,7 +397,7 @@ const textNodes = [
     options: [
       {
         text: 'Tip Ol\' Blue and thank him for his time',
-        setState: { tippedBlue: true, visitedLeft: true },
+        setState: { visitedLeft: true },
         nextText: 3
       },
       {
@@ -522,7 +522,7 @@ const textNodes = [
     options: [
       {
         text: 'Bravo! Donate $5',
-        setState: { movieDonation: true, visitedRight: true  },
+        setState: { visitedRight: true  },
         nextText: 22
       },
       {
@@ -538,7 +538,7 @@ const textNodes = [
     options: [
       {
         text: 'Play Codies',
-        setState: { codies: true, visitedLeft: true },
+        setState: { visitedLeft: true },
         nextText: 22
       },
       {
@@ -554,7 +554,7 @@ const textNodes = [
     options: [
       {
         text: 'Play Valheim with Yellow and co',
-        setState: { valheim: true, visitedLeft: true },
+        setState: { visitedLeft: true },
         nextText: 22
       },
       {
@@ -810,6 +810,7 @@ const textNodes = [
     options: [
       {
         text: 'No problem!',
+        setState: { plushRetrieved: false },
         nextText: 45
       }
     ]
@@ -845,6 +846,7 @@ const textNodes = [
     options: [
       {
         text: 'Here you go',
+        setState: { box: false },
         nextText: 45
       }
     ]
@@ -891,11 +893,193 @@ const textNodes = [
   },
   {
     id: 55,
+    text: 'Would you like to read some messages from your friends?',
+    options: [
+      {
+        text: 'Midnight',
+        nextText: 56
+      },
+            {
+        text: 'Feog',
+        nextText: 57
+      },
+      {
+        text: 'Fizzy',
+        nextText: 58
+      },
+      {
+        text: 'Ghost',
+        nextText: 59
+      },
+      {
+        text: 'Mandu',
+        nextText: 60
+      },
+      {
+        text: 'Plant',
+        nextText: 61
+      },
+      {
+        text: 'Gabby',
+        nextText: 62
+      },
+      {
+        text: 'Shakey',
+        nextText: 63
+      },
+      {
+        text: 'Nat',
+        nextText: 64
+      },
+      {
+        text: 'Trande',
+        nextText: 65
+      },
+      {
+        text: 'helena',
+        nextText: 66
+      },
+      {
+        text: 'Clem',
+        nextText: 67
+      },
+      {
+        text: 'Done reading messages. Continue?',
+        nextText: 70
+      }
+    ]
+  }, 
+  {
+    id: 56,
+    text: 'Hey Muhkko, \n You know how in stories, they often say that while one character leads the team forward, another equally important character pushes them from behind? That\'s exactly how I see you and Ann within the server. Ann may be the creator of the group, but your constant bursts of life and flavor into the server are just as important, and I\'d bet you\'re one of the main reasons the server\'s gotten so huge, while still remaining so friendly and unified. I think practically all of my favorite among us games were a direct result of you being in them, and just making them so hilariously fun to play in. It stopped feeling like a stressful competition, and started feeling like what it should be - a damn enjoyable time with a great group of friends. And that goes for all things you\'re a part of beyond just among us. The world needs more people like that, so never stop gracing it with your presence. Happy birthday Muhkko!! \n - Midnight',
+    options: [
+      {
+        text: 'Back to messages',
+        nextText: 55
+      }
+    ]
+  },
+  {
+    id: 57,
+    text: 'Dear Muhhks,\n Happy Birthday Muhhko! I\'ve said this many times, but me and many other people(almost the entire server lol) are eternally grateful for you for inviting us to the most wholesome place on the internet, I really appreciate having you around and everything you do for the server, and so does everyone else. I hope you have a great day bud, because you sure as hell deserve it.\n Much Love \n - Feog \n P.S I love that you started the bb trend',
+    options: [
+      {
+        text: 'Back to messages',
+        nextText: 55
+      }
+    ]
+  },
+  {
+    id: 58,
+    text: 'Happy birthday Muhhko!  I really hope by the time your reading this I have caught up to you in kernel coins so you can begin playing again haha, anyways thanks for being the one that invited me to the attic! I played among us occasionally with you but I really got to see your true personality once the kernel coins channel was created, that first week of kernel coins brought me many laughs and although I was mostly being roasted in the channel for being a ‘bully’ I still had a lot of fun so thanks for being apart of that:joy: ! Hope you have a great b day! \n - Fizzy',
+    options: [
+      {
+        text: 'Back to messages',
+        nextText: 55
+      }
+    ]
+  },
+  {
+    id: 59,
+    text: 'Happy Birthday to my undefeated ( in fair games) codies duo. Your Benevolence has been big part of why so many people people including myself felt welcomed into the server. Thank you for all that you do. \n - Ghost',
+    options: [
+      {
+        text: 'Back to messages',
+        nextText: 55
+      }
+    ]
+  },
+  {
+    id: 60,
+    text: 'Muhkko, \n I remember the day you invited me to this server, me and fizzy decided to play some au and we happened to join one of your lobbies. I was surprised when I got an invite to another server from someone because I didn\'t think people would wanna play with me again lool. I\'m glad we ended up in your lobby that day because the attic is one of the best servers I\'ve been invited to. I recall that one time when we were playing au and I had to leave after the game, I told you in the ghost chat that it was my lg and you helped me tell everyone after the game ended ahaha. I was thankful for that because I definitely wouldn\'t have been able to say it loud enough for the others to hear. Although I didn\'t talk much during au, I was able to talk to you more in the kernel coin chat (where I was accused of bullying and got reported multiple times) because of our gambling addictions lool. Thank you so much for inviting me to this wonderful server, and happy birthday Muhkko!!! I hope you have a great one  \n - Mandu',
+    options: [
+      {
+        text: 'Back to messages',
+        nextText: 55
+      }
+    ]
+  },
+  {
+    id: 61,
+    text: 'Yow Muhkko the historian! You\'re always the life of the crowd and it really feels different once you join the game!  Though, I hate it since you usually know how I play this game and you always get me when your the imp!  lol. Will always remember that drunken game of yours (I know there\'s a lot of those), but hey! Thanks for giving us the smiles and the laughter or just some time to talk someone, made us a lil bit feel sane during those crazy times! Keep safe brother! Happy birthday! \n - Plant',
+    options: [
+      {
+        text: 'Back to messages',
+        nextText: 55
+      }
+    ]
+  },
+  {
+    id: 62,
+    text: 'Happy bday Muhkko! You made mine amazing this year, and I hope I can help make yours just as great. \n - Gabby',
+    options: [
+      {
+        text: 'Back to messages',
+        nextText: 55
+      }
+    ]
+  },
+  {
+    id: 63,
+    text: 'Muhkko you were one of the first people I met in the earliest days of The Attic, when it was just a handful of us obsessively playing Among Us lol. You quickly became a friend in my book, you are endlessly kind and so much fun to play with. You always show interest in other people\'s days just to show them you care and generally go out of your way to make them feel welcome. The Attic would not be the community it is today without you, and we are all grateful for you helping it become what it is today. Have happy birthday man, I hope to someday share a bowl with you. \n - SHAKEY',
+    options: [
+      {
+        text: 'Back to messages',
+        nextText: 55
+      }
+    ]
+  },
+  {
+    id: 64,
+    text: 'Dear Muhkko, \n I hope that you have an amazing birthday! Although we haven\’t played much together, I know you are a great person. Just even the smallest gesture of popping into vc to wish us a goodnight, check how we are doing, or to tell us that codies is the worst (haha) lets everyone know you are thinking of them and that you care! You treat everyone with love and respect and because of your nature, you have helped to cultivate a lovely network of amazing individuals. \n From inviting people to the server, running among us nights, DnD, and everything in between… you are a great asset to the server! Let’s be honest.. majority of the people on this server are here because of you and for that we are all grateful! You have helped create a safe and loving place for people all over the world to connect and for that, I can’t thank you enough \n I hope your day is as special as you! \n Love Nat',
+    options: [
+      {
+        text: 'Back to messages',
+        nextText: 55
+      }
+    ]
+  },
+  {
+    id: 65,
+    text: 'HAPPY BIRTHDAY MUHKKO WOOOOOOOOO! HOPE YOU HAVE A FANTASTIC DAY!!! AMONG US WAS ALWAYS FUN WITH YOUUUU \n - Trande',
+    options: [
+      {
+        text: 'Back to messages',
+        nextText: 55
+      }
+    ]
+  },   
+  {
+    id: 66,
+    text: 'Hi muhkko its me helena and holy shit are you a cool person.  Like really, a history nerd who has published a book? Dude thats sick as hell. I really do appreciate your chill attitude and outspokenness about the things you believe in, even if i usually dont agree with it i think its nice that you arent afraid to put your opinions out there on the streets. Also you were the first person on the server to really notice me and appreciate me and Ill always be grateful for that, if it hadnt been for you i probably wouldnt be as open in the server. In the end, idk, just know youre cool as hell lol',
+    options: [
+      {
+        text: 'Back to messages',
+        nextText: 55
+      }
+    ]
+  },  
+  {
+    id: 67,
+    text: 'Muhkko bb \n You are one of the kindest most dedicated people I know. The way you go out of your way to make everyone happy (especially in among us) is admirable. You were one of my first friends in the attic, and Im so greatful for meeting you. You deserve the world today, I wish you lots of cake and cat cuddles. Happy birthday bb \n - clem',
+    options: [
+      {
+        text: 'Back to messages',
+        nextText: 55
+      }
+    ]
+  },    
+  {
+    id: 70,
     text: 'Thank you for playing with us, PINK! We love you and hope you have an awesome birthday!!',
     options: [
       {
         text: 'Start over?',
         nextText: -1
+      },
+      {
+        text: 'Back to messages',
+        nextText: 55
       }
     ]
   }
