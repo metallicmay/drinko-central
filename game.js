@@ -44,14 +44,17 @@ function selectOption(option) {
 function changeBackground(option) {
   const image = document.getElementById('image')
   const nextTextNodeId = option.nextText
-  const audio = document.getElementById('audio')
+  const audio_music_room = document.getElementById('audio_music_room')
+  const audio_party = document.getElementById('audio_party')
   const video = document.getElementById('video')
   if(nextTextNodeId <= 0 || nextTextNodeId == 2) {
     image.setAttribute('src', 'assets/stock_basement.jpg')
+    audio_party.pause()
+    audio_party.currentTime = 0
   } else if(nextTextNodeId == 3) {
     image.setAttribute('src', 'assets/foyer.png')
-    audio.pause()
-    audio.currentTime = 0
+    audio_music_room.pause()
+    audio_music_room.currentTime = 0
   } else if(nextTextNodeId == 12) {
     image.setAttribute('src', 'assets/music_room.png')
   } else if(nextTextNodeId == 13 || nextTextNodeId == 17 || nextTextNodeId == 20) {
@@ -61,7 +64,7 @@ function changeBackground(option) {
   } else if(nextTextNodeId == 15 || nextTextNodeId == 19 || nextTextNodeId == 21) {
     image.setAttribute('src', 'assets/stock_casino.jpg')
   } else if(nextTextNodeId == 16) {
-    audio.play()
+    audio_music_room.play()
   } else if(nextTextNodeId == 18) {
     image.setAttribute('src', 'assets/music_room_no_plush.png')
   } else if(nextTextNodeId == 21 && option.text == 'Just one more time!') {
@@ -81,12 +84,18 @@ function changeBackground(option) {
   } else if(nextTextNodeId == 28) {
     image.setAttribute('src', 'assets/stock_codies.png')
   } else if(nextTextNodeId >= 30 && nextTextNodeId <=33 || nextTextNodeId == 35 || nextTextNodeId >= 41 && nextTextNodeId <= 54) {
-    image.setAttribute('src', 'assets/stock_attic.jpg')
+    image.style.display = 'block'
+    image.setAttribute('src', 'assets/the_attic.png')
   } else if(nextTextNodeId == 34) {
     image.setAttribute('src', 'assets/stock_open_door.jpg')
-  } else if(nextTextNodeId == 58) {
+  } else if(nextTextNodeId == 55) {
+    image.style.display = 'none'
+    audio_party.play()
+  }  else if(nextTextNodeId == 58) {
+    image.style.display = 'block'
     image.setAttribute('src', 'assets/fizzy_meme.png')
   }  else{
+    image.style.display = 'block'
     image.setAttribute('src', 'assets/stock_doors.jpg')
   }
 }
@@ -926,7 +935,7 @@ const textNodes = [
         nextText: 61
       },
       {
-        text: 'Gabby bb',
+        text: 'Trust bb',
         nextText: 62
       },
       {
@@ -978,8 +987,20 @@ const textNodes = [
         nextText: 74
       },
       {
-        text: 'Done reading messages. Continue?',
+        text: 'Gabby bb',
         nextText: 75
+      },
+      {
+        text: 'Kim bb',
+        nextText: 76
+      },
+      {
+        text: 'Steel bb',
+        nextText: 77
+      },
+      {
+        text: 'Done reading messages. Continue?',
+        nextText: 78
       }
     ]
   }, 
@@ -1045,7 +1066,7 @@ const textNodes = [
   },
   {
     id: 62,
-    text: 'Happy bday Muhkko! You made mine amazing this year, and I hope I can help make yours just as great. \n - Gabby',
+    text: 'Happy Birthday Muhkko! I hope this year you get a return on all the positivity that you put out into the world. You are a delightful person and I’m happy that I got to know you this last year. I have had an amazing time playing with everyone and that is partially thanks to you. Your enthusiasm and kindness helped me, as an introvert, to feel comfortable and welcomed. Thank you for being you. \n - Trust',
     options: [
       {
         text: 'Back to messages',
@@ -1125,7 +1146,7 @@ const textNodes = [
   },
   {
     id: 70,
-    text: 'Hey Muhkko so uh, first of all, happy birthday for the guy who pretty much invited everyone here, and I say that first because i\'ve been thinking of how could you do it you know? Like, the internet is infested with evil and ppl who put pineapple on pizza yet somehow you gathered so much positivity around, it\'s incredible I must say, but I think I figured something. You are amazing,that\'s it, you\'ve always been around everywhere and with everyone and that is something so hard, that you do so effortlessly. Again I got sidetracked but happy bday Muhkko,thanks for being around and we love you.',
+    text: 'Hey Muhkko so uh, first of all, happy birthday for the guy who pretty much invited everyone here, and I say that first because i\'ve been thinking of how could you do it you know? Like, the internet is infested with evil and ppl who put pineapple on pizza yet somehow you gathered so much positivity around, it\'s incredible I must say, but I think I figured something. You are amazing,that\'s it, you\'ve always been around everywhere and with everyone and that is something so hard, that you do so effortlessly. Again I got sidetracked but happy bday Muhkko,thanks for being around and we love you. \n - Luks',
     options: [
       {
         text: 'Back to messages',
@@ -1175,6 +1196,36 @@ const textNodes = [
   },
   {
     id: 75,
+    text: 'Happy bday Muhkko! You made mine amazing this year, and I hope I can help make yours just as great. \n - Gabby',
+    options: [
+      {
+        text: 'Back to messages',
+        nextText: 55
+      }
+    ]
+  },
+  {
+    id: 76,
+    text: 'Happy Birthday Minko! Continue to be as inspiring as you are, even if you don\'t always feel that way about yourself. Love, Kim',
+    options: [
+      {
+        text: 'Back to messages',
+        nextText: 55
+      }
+    ]
+  },
+  {
+    id: 77,
+    text: 'Muhkko! Happy birthday you scallywag, thanks for being apart of the community and making a difference. Have a great birthday! \n - Steel',
+    options: [
+      {
+        text: 'Back to messages',
+        nextText: 55
+      }
+    ]
+  },
+  {
+    id: 78,
     text: 'Thank you for playing with us, PINK! We love you and hope you have an awesome birthday!!',
     options: [
       {
