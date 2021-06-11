@@ -91,10 +91,13 @@ function changeBackground(option) {
   } else if(nextTextNodeId == 55) {
     image.style.display = 'none'
     audio_party.play()
-  }  else if(nextTextNodeId == 58) {
+  } else if(nextTextNodeId >= 56) {
+    image.style.display = 'block'
+    image.setAttribute('src', 'assets/the_attic_decorated.png')
+  } else if(nextTextNodeId == 58) {
     image.style.display = 'block'
     image.setAttribute('src', 'assets/fizzy_meme.png')
-  }  else{
+  } else{
     image.style.display = 'block'
     image.setAttribute('src', 'assets/stock_doors.jpg')
   }
@@ -999,8 +1002,12 @@ const textNodes = [
         nextText: 77
       },
       {
-        text: 'Done reading messages. Continue?',
+        text: 'Lethal bb',
         nextText: 78
+      },
+      {
+        text: 'Done reading messages. Continue?',
+        nextText: 79
       }
     ]
   }, 
@@ -1226,6 +1233,16 @@ const textNodes = [
   },
   {
     id: 78,
+    text: 'HAPPY BIRTHDAY MUHKKO! Im so glad that we got to meet through among us. Thank you so much for inviting me to the attic server and introducing me to other people, without you I would have probably quit playing with randoms and you\'re superrr superrr amazing. I can\'t wait to make more memories with u and play more among us haha. ILYYY \n PS. I LOVE UR VOICE ITS LIKE ASMR \n - Lethal',
+    options: [
+      {
+        text: 'Back to messages',
+        nextText: 55
+      }
+    ]
+  },
+  {
+    id: 79,
     text: 'Thank you for playing with us, PINK! We love you and hope you have an awesome birthday!!',
     options: [
       {
