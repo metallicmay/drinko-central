@@ -90,7 +90,6 @@ function changeBackground(option) {
     image.setAttribute('src', 'assets/stock_open_door.jpg')
   } else if(nextTextNodeId == 55 || nextTextNodeId == 80) {
     image.style.display = 'none'
-    audio_party.currentTime = 0
     audio_party.play()
   } else if(nextTextNodeId == 56 || nextTextNodeId == 57 || nextTextNodeId >= 59) {
     image.style.display = 'block'
