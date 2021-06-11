@@ -88,8 +88,9 @@ function changeBackground(option) {
     image.setAttribute('src', 'assets/the_attic.png')
   } else if(nextTextNodeId == 34) {
     image.setAttribute('src', 'assets/stock_open_door.jpg')
-  } else if(nextTextNodeId == 55) {
+  } else if(nextTextNodeId == 55 || nextTextNodeId == 80) {
     image.style.display = 'none'
+    audio_party.currentTime = 0
     audio_party.play()
   } else if(nextTextNodeId == 56 || nextTextNodeId == 57 || nextTextNodeId >= 59) {
     image.style.display = 'block'
@@ -1252,6 +1253,21 @@ const textNodes = [
       {
         text: 'Back to messages',
         nextText: 55
+      },
+      {
+        text: 'Listen to the song again? :3',
+        nextText: 80
+      }
+    ]
+  },
+  {
+    id: 80,
+    text: 'PINK SPACE BEAN \n\n We were floating around aimlessly, \n When you pulled us into orbit and helped us see, \n Soon we became a little family \n And you even had us calling each other bb! \n\n Became a force among us, \n A born leader for all of these Franks, \n We know just when you act sus, \n But we know now that it\'s time to give thanks \n\n Pink Space Bean \n Pink Space Bean \n (Your eyebrows sure are mean, \n But you\'re still our favorite!) \n Pink Space Bean <3 \n\n - Love, \n Nina and Hana',
+    options: [
+      {
+        text: 'Return',
+        setState: { visitedLeft: true },
+        nextText: 79
       }
     ]
   }
