@@ -91,7 +91,7 @@ function changeBackground(option) {
   } else if(nextTextNodeId == 55) {
     image.style.display = 'none'
     audio_party.play()
-  } else if(nextTextNodeId >= 56 && nextTextNodeId <= 57 || nextTextNodeId >= 59) {
+  } else if(nextTextNodeId == 56 || nextTextNodeId == 57 || nextTextNodeId >= 59) {
     image.style.display = 'block'
     image.setAttribute('src', 'assets/the_attic_decorated.png')
   } else if(nextTextNodeId == 58) {
